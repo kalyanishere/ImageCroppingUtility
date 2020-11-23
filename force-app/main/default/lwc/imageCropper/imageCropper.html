@@ -1,0 +1,215 @@
+<template>
+    <!-- Content -->
+    <div class="container">
+        <div class="row">
+                <div class="col-md-9">
+                <!-- <h3>Demo:</h3> -->
+                <div class="docs-demo">
+                    <div class="img-container">
+                        <img src={defaultImageUrl} alt="Picture">
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-3">
+                    <!-- <h3>Data:</h3> -->
+                
+                    <div class="docs-data">
+                        <div class="input-group input-group-sm">
+                            <label class="btn btn-primary btn-block" aria-expanded="true">
+                                Advanced Configuration
+                            </label>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text" for="dataX">Move X</label>
+                            </span>
+                            <input type="text" class="form-control" id="dataX" placeholder="x">
+                            <span class="input-group-append">
+                                <span class="input-group-text">px</span>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text" for="dataY">Move Y</label>
+                            </span>
+                            <input type="text" class="form-control" id="dataY" placeholder="y">
+                            <span class="input-group-append">
+                                <span class="input-group-text">px</span>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text" for="dataWidth">Width</label>
+                            </span>
+                            <input type="text" class="form-control" id="dataWidth" placeholder="width">
+                            <span class="input-group-append">
+                                <span class="input-group-text">px</span>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text" for="dataHeight">Height</label>
+                            </span>
+                        <input type="text" class="form-control" id="dataHeight" placeholder="height">
+                            <span class="input-group-append">
+                                <span class="input-group-text">px</span>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text" for="dataRotate">Rotate</label>
+                            </span>
+                            <input type="text" class="form-control" id="dataRotate" placeholder="rotate">
+                            <span class="input-group-append">
+                                <span class="input-group-text">deg</span>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-sm btn-block" style="vertical-align:middle;">
+                           
+                            <lightning-combobox
+                                name="imageSize"
+                                value={imageSize}
+                                placeholder="Select Image Size"
+                                options={ImageOptions}
+                                onchange={handlePixelChange}
+                                dropdown-alignment=auto></lightning-combobox>
+
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <button type="button" class="btn btn-primary btn-block" data-method="advConfig" aria-expanded="true" onclick={doAction}>
+                                Apply Settings
+                            </button>
+                        </div>
+                    </div> 
+                </div>
+        </div>
+    
+        <div class="row" data-id="actions" id="actions">
+            <div class="col-md-9 docs-buttons">
+            <!-- <h3>Toolbar:</h3> -->
+    
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="Zoom In" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Zoom In">
+                    <span class="fas fa-search-plus"></span>
+                </span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="zoom" data-option="-0.1" title="Zoom Out" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Zoom Out">
+                    <span class="fas fa-search-minus"></span>
+                </span>
+                </button>
+            </div>
+    
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" data-method="move" data-option="-10" data-second-option="0" title="Move Left" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Move Left">
+                    <span class="fas fa-arrow-left"></span>
+                </span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="move" data-option="10" data-second-option="0" title="Move Right" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Move Right">
+                    <span class="fas fa-arrow-right"></span>
+                </span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="-10" title="Move Up" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Move Up">
+                    <span class="fas fa-arrow-up"></span>
+                </span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="10" title="Move Down" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Move Down">
+                    <span class="fas fa-arrow-down"></span>
+                </span>
+                </button>
+            </div>
+    
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" data-method="rotate" data-option="-45" title="Rotate Left" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Rotate Left 45">
+                    <span class="fas fa-undo-alt"></span>
+                </span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="rotate" data-option="45" title="Rotate Right" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Rotate Right 45">
+                    <span class="fas fa-redo-alt"></span>
+                </span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="rotate" data-option="180" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Rotate 180">
+                    <span class="fas fa-redo-alt">180°</span>
+                </span>
+                </button>
+            </div>
+    
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" data-method="flip" data-option="-1" data-second-option="x" title="Flip Horizontal" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Flip Horizontal">
+                    <span class="fas fa-arrows-alt-h"></span>
+                </span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="flip" data-option="-1" data-second-option="y" title="Flip Vertical" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="Flip Horizontal">
+                    <span class="fas fa-arrows-alt-v"></span>
+                </span>
+                </button>
+            </div>
+    
+            <!--div class="btn-group">
+                <button type="button" class="btn btn-primary" data-method="crop" title="Crop" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="cropper.crop()">
+                    <span class="fas fa-check"></span>
+                </span>
+                </button>
+                <button type="button" class="btn btn-primary" data-method="clear" title="Clear" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="cropper.clear()">
+                    <span class="fas fa-times"></span>
+                </span>
+                </button>
+            </div-->
+    
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" data-method="reset" title="Reset" onclick={doAction}>
+                    <span class="docs-tooltip" data-toggle="tooltip" title="cropper.reset()">
+                        <span class="fas fa-sync-alt"></span>
+                    </span>
+                </button>
+                <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                    <input type="file" class="sr-only" data-method="fileUpload" id="inputImage" name="file" accept="image/*" onchange={doAction}>
+                    <span class="docs-tooltip" data-toggle="tooltip" title="Import image with Blob URLs">
+                        <span class="fas fa-upload"></span>
+                    </span>
+                </label>
+            <!--button type="button" class="btn btn-primary" data-method="destroy" title="Destroy" onclick={doAction}>
+                <span class="docs-tooltip" data-toggle="tooltip" title="cropper.destroy()">
+                    <span class="fas fa-power-off"></span>
+                </span>
+            </button-->
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-success" data-method="getCroppedCanvas" data-option="4096" data-second-option="4096" onclick={doAction}>
+                    <span class="docs-tooltip" data-toggle="tooltip" title="cropper.getCroppedCanvas()">
+                    Preview Image
+                    </span>
+                </button>
+            </div>
+            
+            
+            <!-- /.docs-buttons -->
+            <!--Modal Window to show the Cropped Preview--> 
+            <c-modalwindow show-modal={showModal} onclose={closeModal} onupload={uploadFiles} >
+                <span slot="header">Cropped Data</span> 
+                <span slot="body">
+                    <div class="docs-cropped">
+                        <div class="slds-modal__content slds-var-p-around_medium modal-body">
+                            <img src={resultdata}></img> 
+                        </div>
+                    </div>
+                </span> 
+            </c-modalwindow>
+    
+            </div>
+            
+        </div>
+    </div>
+  </template>
