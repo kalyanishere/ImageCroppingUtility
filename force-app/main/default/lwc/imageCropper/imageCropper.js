@@ -56,24 +56,37 @@ export default class ImageCropper extends LightningElement {
 
         let container = this.template.querySelector('.img-container');
         let image = container.getElementsByTagName('img').item(0);
-        let docs_data = this.template.querySelector('.docs-data');
-        let dataX = docs_data.getElementsByTagName('input').item(0);
-        let dataY = docs_data.getElementsByTagName('input').item(1);
-        let dataHeight = docs_data.getElementsByTagName('input').item(3);
-        let dataWidth = docs_data.getElementsByTagName('input').item(2);
-        let dataRotate = docs_data.getElementsByTagName('input').item(4);
-
+        let inp=this.template.querySelectorAll("lightning-input");    
         let options = {
             ready: function (e) {
                 console.log(e.type);
             },
             crop: function (e) {
                 var data = e.detail;
-                dataX.value = Math.round(data.x);
-                dataY.value = Math.round(data.y);
-                dataHeight.value = Math.round(data.height);
-                dataWidth.value = Math.round(data.width);
-                dataRotate.value = typeof data.rotate !== 'undefined' ? data.rotate : '';
+
+                inp.forEach(function(element){
+                        switch(element.name){
+                            case 'x':
+                                element.value=Math.round(data.x);
+                            break;
+                            
+                            case 'y':
+                                element.value=Math.round(data.y);
+                            break;
+            
+                            case 'w':
+                                element.value=Math.round(data.width);
+                            break;
+            
+                            case 'h':
+                                element.value=Math.round(data.height);
+                            break;
+            
+                            case 'r':
+                                element.value=Math.round(data.rotate);
+                            break;
+                        }
+                    },this);
             }
         };
 
@@ -193,13 +206,36 @@ export default class ImageCropper extends LightningElement {
             break;
 
             case 'advConfig':
+                let inp=this.template.querySelectorAll("lightning-input"); 
+                let datax;
+                let datay;
+                let datah;
+                let dataw;
+                let datar;
+                inp.forEach(function(element){
+                        switch(element.name){
+                            case 'x':
+                                datax=element.value;
+                            break;
+                            
+                            case 'y':
+                                datay=element.value;
+                            break;
+            
+                            case 'w':
+                                dataw=element.value;
+                            break;
+            
+                            case 'h':
+                                datah=element.value;
+                            break;
+            
+                            case 'r':
+                                datar=element.value;
+                            break;
+                        }
+                    },this);
 
-                let docs_data = this.template.querySelector('.docs-data');
-                let datax = docs_data.getElementsByTagName('input').item(0).value;
-                let datay = docs_data.getElementsByTagName('input').item(1).value;
-                let datah = docs_data.getElementsByTagName('input').item(3).value;
-                let dataw = docs_data.getElementsByTagName('input').item(2).value;
-                let datar = docs_data.getElementsByTagName('input').item(4).value;
                 let dataparams={
                     "x": Math.round(datax),
                     "y": Math.round(datay),
@@ -207,6 +243,7 @@ export default class ImageCropper extends LightningElement {
                     "height": Math.round(datah),
                     "rotate": Math.round(datar)
                 }
+                alert(JSON.stringify(dataparams));
                 this.cropper.setData(dataparams);
                 this.cropper.crop();
                 
