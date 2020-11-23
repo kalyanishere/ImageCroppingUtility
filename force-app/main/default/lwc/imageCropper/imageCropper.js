@@ -21,6 +21,7 @@ export default class ImageCropper extends LightningElement {
     imageQuality=0.8;
     imageSize = '2';
 
+
     standardResolutions = { '6': ['4096', '4096'], '5': ['1920', '1080'], '4': ['1280', '720'], '3': ['1024', '768'], '2': ['640', '480'], '1': ['320', '240'] };
 
     get ImageOptions() {
