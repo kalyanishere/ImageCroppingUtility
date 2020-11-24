@@ -3,8 +3,6 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import uploadFiles from '@salesforce/apex/FileUploadController.uploadFiles';
 import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
 import cropper from '@salesforce/resourceUrl/cropper';
-import bootstrap from '@salesforce/resourceUrl/bootstrap';
-import fontawesome from '@salesforce/resourceUrl/fontawesome';
 import staticImage from '@salesforce/resourceUrl/ImageTest';
 
 export default class ImageCropper extends LightningElement {
@@ -20,7 +18,7 @@ export default class ImageCropper extends LightningElement {
     uploadedImageURL;
     imageQuality=0.8;
     imageSize = '2';
-
+    @track showAdvConfig=false;
 
     standardResolutions = { '6': ['4096', '4096'], '5': ['1920', '1080'], '4': ['1280', '720'], '3': ['1024', '768'], '2': ['640', '480'], '1': ['320', '240'] };
 
@@ -45,10 +43,7 @@ export default class ImageCropper extends LightningElement {
         Promise.all([
             loadScript(this, cropper + '/dist/cropper.js'),
             loadStyle(this, cropper + '/dist/cropper.css'),
-            loadStyle(this, cropper + '/dist/main.css'),
-            loadStyle(this, bootstrap + '/bootstrap-4.3.1-dist/css/bootstrap.css'),
-            //loadScript(this, bootstrap + '/bootstrap-4.3.1-dist/js/bootstrap.js'),
-            loadStyle(this, fontawesome + '/css/all.css'),
+            loadStyle(this, cropper + '/dist/main.css')
         ])
             .then(() => {
                 this.initImageCropper();
@@ -160,6 +155,7 @@ export default class ImageCropper extends LightningElement {
 
             case 'reset':
                 this.cropper.reset();
+                this.showAdvConfig=false;
             break;
 
             case 'clear':
@@ -210,6 +206,13 @@ export default class ImageCropper extends LightningElement {
                         }
                             
                     };
+            break;
+
+            case 'showAdvConfig':
+                    if(this.showAdvConfig)
+                        this.showAdvConfig=false;
+                    else
+                        this.showAdvConfig=true;
             break;
 
             case 'advConfig':
