@@ -24,6 +24,12 @@ export default class ImageCropper extends LightningElement {
 
     standardResolutions = { '6': ['4096', '4096'], '5': ['1920', '1080'], '4': ['1280', '720'], '3': ['1024', '768'], '2': ['640', '480'], '1': ['320', '240'] };
 
+    get ImageType() {
+        return [
+            { label: 'JPEG', value: 'image/jpeg' },
+            { label: 'PNG', value: 'image/png' },
+        ]
+    }
     get ImageOptions() {
         return [
             { label: '4096*4096', value: '6' },
@@ -260,6 +266,11 @@ export default class ImageCropper extends LightningElement {
     handlePixelChange(event){
 
         this.imageSize=event.detail.value;
+    }
+
+    changeImageType(event){
+
+        this.uploadedImageType=event.target.value;
     }
 
     openPreview(w,h) {
