@@ -1,6 +1,6 @@
 <template>
     <lightning-layout horizontal-align="center" vertical-align="start">
-        <lightning-layout-item size="6">
+        <lightning-layout-item size="7">
             <lightning-card>
                 <lightning-layout horizontal-align="center" vertical-align="start" >
                     <lightning-layout-item>
@@ -12,56 +12,33 @@
                 <lightning-layout horizontal-align="space" vertical-align="start">
                     <lightning-layout-item>
                         <lightning-card>
-                            <lightning-layout horizontal-align="space" vertical-align="start">
+                            <lightning-layout horizontal-align="stretch" vertical-align="start" multiple-rows="true">
                                 <lightning-layout-item>
                                     <lightning-button-group>
                                         <lightning-button-icon icon-name="utility:zoomin"  variant="brand" data-method="zoom" data-option="0.1"   alternative-text="Zoom in"  class="slds-var-m-left_xx-small" title="Zoom In" onclick={doAction}></lightning-button-icon>
                                         <lightning-button-icon icon-name="utility:zoomout" variant="brand" data-method="zoom" data-option="-0.1"   alternative-text="Zoom out" class="slds-var-m-left_xx-small" title="Zoom out" onclick={doAction}></lightning-button-icon>
-                                    </lightning-button-group>
-                                </lightning-layout-item>
-    
-                                <lightning-layout-item>
-                                    <lightning-button-group>
+                                    
                                         <lightning-button-icon icon-name="utility:back"  variant="brand" data-method="move" data-option="-10" data-second-option="0"  alternative-text="Move Left"  class="slds-var-m-left_xx-small" title="Move Left" onclick={doAction}></lightning-button-icon>
                                         <lightning-button-icon icon-name="utility:forward" variant="brand" data-method="move" data-option="10" data-second-option="0"  alternative-text="Move Right" class="slds-var-m-left_xx-small" title="Move Right" onclick={doAction}></lightning-button-icon>
                                         <lightning-button-icon icon-name="utility:arrowup"  variant="brand" data-method="move" data-option="0" data-second-option="-10"  alternative-text="Move Up"  class="slds-var-m-left_xx-small" title="Move Up" onclick={doAction}></lightning-button-icon>
                                         <lightning-button-icon icon-name="utility:arrowdown" variant="brand" data-method="move" data-option="0" data-second-option="10"  alternative-text="Move Down" class="slds-var-m-left_xx-small" title="Move Down" onclick={doAction}></lightning-button-icon>
-                                    </lightning-button-group>
-                                </lightning-layout-item>
-    
-                                <lightning-layout-item>
-                                    <lightning-button-group>
+                                    
                                         <lightning-button-icon icon-name="utility:undo"  variant="brand" data-method="rotate" data-option="-45" alternative-text="Rotate -45"  class="slds-var-m-left_xx-small" title="Rotate -45" onclick={doAction}></lightning-button-icon>
                                         <lightning-button-icon icon-name="utility:redo" variant="brand" data-method="rotate" data-option="45" alternative-text="Rotate 45" class="slds-var-m-left_xx-small" title="Rotate 45" onclick={doAction}></lightning-button-icon>
                                         <lightning-button-icon icon-name="utility:loop"  variant="brand" data-method="rotate" data-option="180"  alternative-text="Rotate 180"  class="slds-var-m-left_xx-small" title="Rotate 180" onclick={doAction}></lightning-button-icon>
-                                    </lightning-button-group>
-                                </lightning-layout-item>
-    
-                                <lightning-layout-item>
-                                    <lightning-button-group>
+                                   
                                         <lightning-button-icon icon-name="utility:undo"  variant="brand" data-method="flip" data-option="-1" data-second-option="x" title="Flip Horizontal" alternative-text="Flip Horizontal"  class="slds-var-m-left_xx-small"  onclick={doAction}></lightning-button-icon>
                                         <lightning-button-icon icon-name="utility:redo" variant="brand" data-method="flip" data-option="-1" data-second-option="y" title="Flip Vertical"  alternative-text="Flip Vertical" class="slds-var-m-left_xx-small" onclick={doAction}></lightning-button-icon>
-                                    </lightning-button-group>
-                                </lightning-layout-item>
-    
-                                <lightning-layout-item>
-                                    <lightning-button-group>
+                                    
                                         <lightning-button-icon icon-name="utility:rotate"  variant="brand" data-method="reset" title="Reset"  alternative-text="Reset"  class="slds-var-m-left_xx-small"  onclick={doAction}></lightning-button-icon>    
                                         <lightning-button-icon icon-name="utility:setup"  variant="brand" data-method="showAdvConfig" title="Show Advanced Config"  alternative-text="Show Advanced Config"  class="slds-var-m-left_xx-small"  onclick={doAction}></lightning-button-icon>
+                                        <lightning-button-icon icon-name="action:preview" variant="brand"  data-method="getCroppedCanvas" data-option="4096" data-second-option="4096"  title="Preview Image"  alternative-text="Preview Image" class="slds-var-m-left_xx-small" onclick={doAction}></lightning-button-icon> 
+                                    
                                     </lightning-button-group>
                                 </lightning-layout-item>
-
                                 <lightning-layout-item>
                                     <lightning-input variant="label-hidden" multiple="true" type="file" name="fileUpload" data-method="fileUpload" accept="image/*" onchange={doAction} ></lightning-input>
                                 </lightning-layout-item>
-
-                                <lightning-layout-item>
-                                    <lightning-button-group>  
-                                        <lightning-button variant="success" class="slds-var-m-left_x-small" data-method="getCroppedCanvas" data-option="4096" data-second-option="4096"  label="Preview Image" onclick={doAction}></lightning-button> 
-                                    </lightning-button-group>
-                                </lightning-layout-item>
-
-                                
 
                                 <lightning-layout-item>
                                 <!--Modal Window to show the Cropped Preview--> 
@@ -82,7 +59,7 @@
                 </lightning-layout>
             </lightning-card>
         </lightning-layout-item>
-        <lightning-layout-item size="2">
+        <lightning-layout-item size="3">
             <template if:true={showAdvConfig}> 
                 <lightning-card icon-name="utility:setup" title="Advanced Configuration">
                     <lightning-layout horizontal-align="center" vertical-align="start" >

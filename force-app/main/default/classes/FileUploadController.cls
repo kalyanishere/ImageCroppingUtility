@@ -28,8 +28,6 @@ public with sharing class FileUploadController {
             }
             if(String.isNotBlank(recordId)){
                 for (ContentVersion cv : [SELECT ID,ContentDocumentId FROM ContentVersion WHERE Id IN :cvIds]) {
-                    System.debug('ContentDoc Id'+cv.ContentDocumentId);
-                    System.debug('CV Id'+cv.Id);
                     ContentDocumentLink cdl = new ContentDocumentLink();
                         cdl.ContentDocumentId=cv.ContentDocumentId;
                         cdl.LinkedEntityId=recordId;

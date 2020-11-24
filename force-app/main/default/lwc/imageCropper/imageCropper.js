@@ -59,7 +59,7 @@ export default class ImageCropper extends LightningElement {
 
         let container = this.template.querySelector('.img-container');
         let image = container.getElementsByTagName('img').item(0);
-        let inp=this.template.querySelectorAll("lightning-input");    
+        let inp=this.template.querySelectorAll('lightning-input');    
         let options = {
             ready: function (e) {
                 console.log(e.type);
@@ -97,11 +97,19 @@ export default class ImageCropper extends LightningElement {
         this.originalImageURL = image.src;
         
     };
+   
+    callFileSelector(event){
+        
+        //let inp1=this.template.querySelector("lightning-input[data-id='fileUpload']"); 
+        alert(this.template.querySelectorAll("data-id='fileUpload'"));
+        
+        //alert('Here out'+this.template.querySelector("fileUpload"));
+       
+    };
 
     doAction(event){
         let target = event.target || event.srcElement;
         let data;
-        
         while (target !== this) {
             if (target.getAttribute('data-method')) {
                 break;
@@ -164,6 +172,7 @@ export default class ImageCropper extends LightningElement {
             break;
 
             case 'getCroppedCanvas':
+
                 this.openPreview(data.option,data.secondOption);
             break;
 
