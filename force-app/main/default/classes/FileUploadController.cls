@@ -6,9 +6,10 @@ public with sharing class FileUploadController {
     }
 
     @AuraEnabled
-    public static boolean uploadFiles(List<Map<String, Object>> files){
+    public static boolean uploadFiles(String recordId,List<Map<String, Object>> files){
         Boolean isSuccess = false;
         List<ContentVersion> filesToUpload = new List<ContentVersion>();
+        List<ContentDocumentLink> linkedFiles = new List<ContentDocumentLink>();
         try{
             for (Map<String, Object> file : files) {
                 String fileJson = JSON.serialize(file);
@@ -19,10 +20,28 @@ public with sharing class FileUploadController {
                 contentVersionFile.VersionData = fileContent.VersionData;
                 filesToUpload.add(contentVersionFile);
             }
-            Database.saveResult[] srFiles = Database.insert(filesToUpload);
-            for (Database.SaveResult saveResult : srFiles) {
-                isSuccess = saveResult.isSuccess();
+            insert filesToUpload;
+            List<Id> cvIds = new List<Id>();
+
+            for(ContentVersion cv : filesToUpload){
+                cvIds.add(cv.id);
             }
+            if(String.isNotBlank(recordId)){
+                for (ContentVersion cv : [SELECT ID,ContentDocumentId FROM ContentVersion WHERE Id IN :cvIds]) {
+                    System.debug('ContentDoc Id'+cv.ContentDocumentId);
+                    System.debug('CV Id'+cv.Id);
+                    ContentDocumentLink cdl = new ContentDocumentLink();
+                        cdl.ContentDocumentId=cv.ContentDocumentId;
+                        cdl.LinkedEntityId=recordId;
+                        cdl.ShareType = 'V';
+                        linkedFiles.add(cdl);
+
+                }
+
+                insert linkedFiles;
+            }
+
+            isSuccess=true;
             
         }catch(Exception e){
             throw e;

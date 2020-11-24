@@ -18,6 +18,7 @@ export default class ImageCropper extends LightningElement {
     uploadedImageURL;
     imageQuality=0.8;
     imageSize = '2';
+    @api recordId;
     @track showAdvConfig=false;
 
     standardResolutions = { '6': ['4096', '4096'], '5': ['1920', '1080'], '4': ['1280', '720'], '3': ['1024', '768'], '2': ['640', '480'], '1': ['320', '240'] };
@@ -199,6 +200,9 @@ export default class ImageCropper extends LightningElement {
                                 }
                                   
                                 this.cropper = new Cropper(imagetarget);
+                                let res=this.cropper.getCroppedCanvas(); 
+                                //this.template.querySelector('.img-container').innerHTML='';
+                                //this.template.querySelector('.img-container').appendChild(res); 
                                 
                             }
                         } else {
@@ -280,8 +284,6 @@ export default class ImageCropper extends LightningElement {
         let size=this.standardResolutions[this.imageSize];
         let result=this.cropper.getCroppedCanvas({width:size[0],height:size[1],fillcolor:'#fff'}); 
         this.resultdata=result.toDataURL(this.uploadedImageType,this.imageQuality);
-        //this.template.querySelector('.modal-body').innerHTML='';
-        //this.template.querySelector('.modal-body').appendChild(result); 
         this.showModal = true;          
     };
 
@@ -292,14 +294,13 @@ export default class ImageCropper extends LightningElement {
 
     async uploadFiles() {
         
-            //alert('Parent '+this.resultdata);
             let filesUploaded = [];
             let base64 = 'base64,';
             let content = this.resultdata.indexOf(base64) + base64.length;
             let fileContents = this.resultdata.substring(content);         
             filesUploaded.push({PathOnClient: this.uploadedImageName, Title: this.uploadedImageName, VersionData: fileContents});
             
-            await uploadFiles({files:filesUploaded}).then(res=>{
+            await uploadFiles({recordId:this.recordId,files:filesUploaded}).then(res=>{
                 this.showToastMessage('Cropped Image Uploaded Successfully',res,'Success');
             }).catch(error=>{
                 this.showToastMessage('Unable to upload image',error.message,'Error');
