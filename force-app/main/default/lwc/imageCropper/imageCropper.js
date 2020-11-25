@@ -4,6 +4,7 @@ import uploadFiles from '@salesforce/apex/FileUploadController.uploadFiles';
 import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
 import cropper from '@salesforce/resourceUrl/cropper';
 import staticImage from '@salesforce/resourceUrl/ImageTest';
+import FORM_FACTOR from '@salesforce/client/formFactor';
 
 export default class ImageCropper extends LightningElement {
 
@@ -20,15 +21,31 @@ export default class ImageCropper extends LightningElement {
     imageSize = '2';
     @api recordId;
     @track showAdvConfig=false;
+    
 
     standardResolutions = { '6': ['4096', '4096'], '5': ['1920', '1080'], '4': ['1280', '720'], '3': ['1024', '768'], '2': ['640', '480'], '1': ['320', '240'] };
+
+    get onlyDesktop() {
+            if(FORM_FACTOR=='Large'){
+               return true;
+            }
+
+            return false;
+    };
+    get onlyMobile() {
+        if(FORM_FACTOR=='Large'){
+           return false;
+        }
+
+        return true;
+    };
 
     get ImageType() {
         return [
             { label: 'JPEG', value: 'image/jpeg' },
             { label: 'PNG', value: 'image/png' },
         ]
-    }
+    };
     get ImageOptions() {
         return [
             { label: '4096*4096', value: '6' },
@@ -98,13 +115,10 @@ export default class ImageCropper extends LightningElement {
         
     };
    
-    callFileSelector(event){
+    handleclick(event){
         
-        //let inp1=this.template.querySelector("lightning-input[data-id='fileUpload']"); 
-        alert(this.template.querySelectorAll("data-id='fileUpload'"));
-        
-        //alert('Here out'+this.template.querySelector("fileUpload"));
-       
+        this.template.querySelector('input').click();
+         
     };
 
     doAction(event){
